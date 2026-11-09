@@ -1,0 +1,58 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+
+language: "es-ES"
+
+reviews:
+  profile: "chill"
+  request_changes_workflow: false
+  high_level_summary: true
+  review_status: true
+  poem: false
+
+  path_filters:
+    - "!target/**"
+    - "!build/**"
+    - "!**/*.class"
+    - "!**/*.log"
+    - "!**/.env"
+    - "!**/.env.*"
+    - "!**/application-local.yml"
+
+  path_instructions:
+    - path: "**/domain/**"
+      instructions: |
+        Revisa reglas de negocio, invariantes, estados y transiciones.
+        Comprueba que el dominio no dependa de Spring ni infraestructura.
+
+    - path: "**/application/**"
+      instructions: |
+        Revisa casos de uso, transacciones y separación de responsabilidades.
+
+    - path: "**/infrastructure/**"
+      instructions: |
+        Revisa persistencia JPA, consultas, transacciones y compatibilidad
+        con PostgreSQL y Flyway.
+
+    - path: "**/web/**"
+      instructions: |
+        Revisa contratos REST, validaciones, códigos HTTP, autenticación,
+        autorización y exposición de información sensible.
+
+    - path: "**/db/migration/**"
+      instructions: |
+        Revisa migraciones Flyway, integridad y posibles pérdidas de datos.
+
+    - path: "**/test/**"
+      instructions: |
+        Revisa cobertura, casos límite y calidad de las pruebas.
+        No recomiendes eliminar pruebas para ocultar fallos.
+
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    drafts: false
+    base_branches:
+      - "develop"
+
+chat:
+  auto_reply: true
